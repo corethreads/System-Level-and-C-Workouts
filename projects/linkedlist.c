@@ -1,83 +1,79 @@
+/**********************************************************
+ * Name: linked.c                                         *
+ * Purpose: ***.                                          *
+ * Author: CoreThreads                                    *
+ **********************************************************/
+
 #include <stdio.h>
 #include <stdlib.h>
 
-/****************************
- *Create the Node Structure *
- ****************************/
+typedef struct node {
+  unsigned int data;
+  struct node *next;
+} Node;
 
-typedef struct Node {
-  int data;
-  struct Node *next;
-} Node_t;
+Node *CreateNode(int value) {
 
-// Create Node
-Node_t *CreateNode(int value) {
-  Node_t *createnode = (Node_t *)malloc(sizeof(Node_t));
-
-  if (createnode == NULL) {
-    printf("Memory Allocation Failed..\n");
-    exit(1);
-  }
-
+  Node *createnode = (Node *)malloc(sizeof(value));
   createnode->data = value;
   createnode->next = NULL;
-
-  return createnode;
 }
 
-void BInsert(Node_t **head, int value) {
-  Node_t *new_node = CreateNode(value);
-
-  // points to the address of head which the address contains NULL;
-  new_node->next = *head;
-
-  // Now we replace head with the new_node
-  *head = new_node;
+void BInsert(Node **head, unsigned int value) {
+  Node *newNode = CreateNode(value);
+  newNode->next = *head;
+  *head = newNode;
 }
 
-void EInsert(Node_t **head, int value) {
-  Node_t *new_node = CreateNode(value);
-
+void Einsert(Node **head, unsigned int value) {
+  Node *newNode = CreateNode(value);
   if (*head == NULL) {
-    *head = new_node;
+    *head = newNode;
+    return;
   }
 
-  Node_t *current = *head;
+  Node *current = *head;
   while (current->next != NULL) {
     current = current->next;
   }
-  current->next = new_node;
+  current->next = newNode;
 }
-void PrintList(Node_t *head) {
-  printf("Linked List...\n");
 
-  Node_t *current = head;
+void DeleteNode(Node **head, unsigned int nodeDelete) {
+  if (head == NULL) {
+    return;
+  }
+}
+void PrintList(Node *head) {
+  Node *current = head;
+  if (current == NULL) {
+    printf("List is empty");
+  }
   while (current != NULL) {
-    printf("Data = [%d] points to --> [%p]\n", current->data, current->next);
+    printf("Data = [%p][%d] points to --> [%p]\n", &current->data,
+           current->data, current->next);
     current = current->next;
   }
 }
 
-void FreeList(Node_t *head) {
-  printf("Free List\n");
-
-  Node_t *current = head;
+void FreeList(Node *head) {
+  Node *current = head;
   while (current != NULL) {
-    Node_t *temp = current;
+    Node *temp = current;
     current = current->next;
-    printf("Freed Address = %p, Data --> [%d]\n", temp, temp->data);
+    printf("Freed data[ %d ] --> Address [%p]\n", temp->data, temp);
     free(temp);
   }
 }
 
 int main(void) {
-  // A head pointer that is NULL
-  Node_t *head = NULL;
-  BInsert(&head, 10);
-  EInsert(&head, 20);
-  EInsert(&head, 30);
+  Node *head = NULL;
+
+  BInsert(&head, 5);
+  Einsert(&head, 20);
+  Einsert(&head, 30);
+  Einsert(&head, 40);
   PrintList(head);
   FreeList(head);
-
-  return 0;
+  return EXIT_SUCCESS;
 }

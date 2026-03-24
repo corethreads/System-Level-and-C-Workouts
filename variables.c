@@ -1,15 +1,10 @@
 #include <stdio.h>
 
-#define PI 3.14159
-#define Sphere ((4.0f / 3.0f) * PI)
-
 int main() {
-  int radius;
-  float results;
+  int x = 50;
+  int y = 100;
 
-  radius = 10;
-  results = Sphere * (radius * radius * radius);
-
-  printf("The volume of a sphere with radius %d is %6f\n", radius, results);
+  printf("%d\n", y);
+  printf("%d\n", x);
   return 0;
 }
