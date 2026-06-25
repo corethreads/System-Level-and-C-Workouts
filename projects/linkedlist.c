@@ -4,6 +4,7 @@
  * Author: CoreThreads                                    *
  **********************************************************/
 
+#include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -14,9 +15,11 @@ typedef struct node {
 
 Node *CreateNode(int value) {
 
-  Node *createnode = (Node *)malloc(sizeof(value));
+  Node *createnode = (Node *)malloc(sizeof(Node));
   createnode->data = value;
   createnode->next = NULL;
+
+  return createnode;
 }
 
 void BInsert(Node **head, unsigned int value) {
@@ -40,10 +43,35 @@ void Einsert(Node **head, unsigned int value) {
 }
 
 void DeleteNode(Node **head, unsigned int nodeDelete) {
-  if (head == NULL) {
+
+  if (*head == NULL) {
     return;
   }
+
+  if ((*head)->data == nodeDelete) {
+    Node *RepresentHead = *head;
+    *head = (*head)->next;
+    free(RepresentHead);
+    return;
+  }
+
+  Node *StartingNode = *head;
+  Node *followingNode = (*head)->next;
+
+  while (followingNode != NULL && followingNode->data != nodeDelete) {
+    StartingNode = followingNode;
+    followingNode = followingNode->next;
+  }
+
+  if (followingNode != NULL) {
+    printf("Node is [%d], \n", followingNode->data);
+    StartingNode->next = followingNode->next;
+    printf("Freeing Node {%d}... \n", followingNode->data);
+    free(followingNode);
+    printf("Done...\n");
+  }
 }
+
 void PrintList(Node *head) {
   Node *current = head;
   if (current == NULL) {
@@ -73,6 +101,7 @@ int main(void) {
   Einsert(&head, 20);
   Einsert(&head, 30);
   Einsert(&head, 40);
+  DeleteNode(&head, 20);
   PrintList(head);
   FreeList(head);
   return EXIT_SUCCESS;
