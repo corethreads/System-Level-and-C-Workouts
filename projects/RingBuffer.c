@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
 // Ring buffer structure
 typedef struct {
   int *data;
@@ -89,7 +88,7 @@ void freeRingBuffer(RingBuffer *rb) {
 
 // Test function
 void testRingBuffer() {
-  printf("\n========== RING BUFFER DEMO ==========\n");
+  printf("\n [~Corethreads demo~] RING BUFFER DEMO\n");
   RingBuffer *rb = createRingBuffer(8); // Fixed size of 8
 
   printf("Adding 5 items to size-8 buffer...\n");

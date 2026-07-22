@@ -26,6 +26,8 @@ void rb_init(struct ring_buffer *rb, size_t size) {
   rb->is_full = 0;
 }
 
+
+
 void rb_free(struct ring_buffer *rb) { free(rb->buffer); }
 
 int rb_write(struct ring_buffer *rb, uint8_t data) {
